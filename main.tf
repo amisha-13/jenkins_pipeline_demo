@@ -1,16 +1,16 @@
 //defining data block
 
-data "aws_ami" "amazon-linux-3" { # we are reading aws_ami reource and naming it as amazon-linux-3
+data "aws_ami" "amazon_linux_2023" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["al2023-ami-2023.*"]
+    values = ["al2023-ami-*-x86_64"]
   }
 
   filter {
-    name   = "owner-alias"
-    values = ["amazon"]
+    name   = "architecture"
+    values = ["x86_64"]
   }
 
   filter {
@@ -18,16 +18,12 @@ data "aws_ami" "amazon-linux-3" { # we are reading aws_ami reource and naming it
     values = ["hvm"]
   }
 
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
-  }
+  owners = ["137112412989"] # Amazon official
 }
 
 
-
 resource "aws_instance" "dev_instance" {
-  ami           = data.aws_ami.amazon-linux-3.id # <block name>.<resource name>.<common name>.id
+  ami           = data.aws_ami.amazon_linux_2023.id # <block name>.<resource name>.<common name>.id
   instance_type = var.instance_size
   count         = var.instance_count
   key_name      = var.instance_key
@@ -36,4 +32,8 @@ resource "aws_instance" "dev_instance" {
     Name        = "My Dev Server"
     Environment = "Dev"
   }
+}
+
+resource "aws_vpc" "aws_vpc_example" {
+  cidr_block = "10.0.0.0/16"
 }
