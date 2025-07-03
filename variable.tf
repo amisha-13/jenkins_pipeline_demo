@@ -9,3 +9,7 @@ variable "instance_count" {
 variable "instance_key" {
   type = string
 }
+
+variable "cidr_block" {
+  type = string
+}
