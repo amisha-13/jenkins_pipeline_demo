@@ -34,6 +34,6 @@ resource "aws_instance" "dev_instance" {
   }
 }
 
-resource "aws_vpc" "aws_vpc_example" {
-  cidr_block = "10.0.0.0/16"
-}
+# resource "aws_vpc" "aws_vpc_example" {
+#   cidr_block = "10.0.0.0/16"
+# }
